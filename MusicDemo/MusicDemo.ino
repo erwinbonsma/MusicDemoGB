@@ -1,34 +1,11 @@
 #include <Gamebuino-Meta.h>
 
-namespace Gamebuino_Meta {
+#include "Tune.h"
+#include "Song.h"
 
-const TuneSpec testTune = TuneSpec {
-    .noteDuration = 32,
-    .loopStart = 16,
-    .numNotes = 16,
-    .notes = new NoteSpec[16] {
-        NoteSpec { .note=Note::A, .oct=4, .vol=8, .wav=WaveForm::TRIANGLE, .fx=Effect::NONE },
-        NoteSpec { .note=Note::B, .oct=4, .vol=7, .wav=WaveForm::TRIANGLE, .fx=Effect::NONE },
-        NoteSpec { .note=Note::C, .oct=4, .vol=6, .wav=WaveForm::TRIANGLE, .fx=Effect::ARPEGGIO },
-        NoteSpec { .note=Note::D, .oct=4, .vol=5, .wav=WaveForm::TRIANGLE, .fx=Effect::NONE },
-
-        NoteSpec { .note=Note::C, .oct=4, .vol=8, .wav=WaveForm::TRIANGLE, .fx=Effect::ARPEGGIO },
-        NoteSpec { .note=Note::D, .oct=4, .vol=7, .wav=WaveForm::TRIANGLE, .fx=Effect::ARPEGGIO },
-        NoteSpec { .note=Note::E, .oct=4, .vol=6, .wav=WaveForm::TRIANGLE, .fx=Effect::ARPEGGIO },
-        NoteSpec { .note=Note::F, .oct=4, .vol=5, .wav=WaveForm::TRIANGLE, .fx=Effect::NONE },
-
-        NoteSpec { .note=Note::A, .oct=4, .vol=8, .wav=WaveForm::TRIANGLE, .fx=Effect::NONE },
-        NoteSpec { .note=Note::B, .oct=4, .vol=8, .wav=WaveForm::TRIANGLE, .fx=Effect::NONE },
-        NoteSpec { .note=Note::C, .oct=4, .vol=8, .wav=WaveForm::TRIANGLE, .fx=Effect::NONE },
-        NoteSpec { .note=Note::D, .oct=4, .vol=8, .wav=WaveForm::TRIANGLE, .fx=Effect::ARPEGGIO_FAST },
-        NoteSpec { .note=Note::E, .oct=4, .vol=8, .wav=WaveForm::TRIANGLE, .fx=Effect::ARPEGGIO_FAST },
-        NoteSpec { .note=Note::F, .oct=4, .vol=8, .wav=WaveForm::TRIANGLE, .fx=Effect::ARPEGGIO_FAST },
-        NoteSpec { .note=Note::G, .oct=4, .vol=8, .wav=WaveForm::TRIANGLE, .fx=Effect::ARPEGGIO_FAST },
-        NoteSpec { .note=Note::A, .oct=5, .vol=6, .wav=WaveForm::TRIANGLE, .fx=Effect::NONE }
-    }
-};
-
-} // Namespace
+constexpr int HISTORY_LEN = 160;
+int8_t cpuLoadHistory[HISTORY_LEN];
+int cpuLoadHistoryIndex;
 
 void displayCpuLoad() {
   int cpuLoad = gb.getCpuLoad();
@@ -53,15 +30,32 @@ void displayCpuLoad() {
   gb.display.print(cpuLoad);
 }
 
+void drawCpuHistory() {
+  gb.display.setColor(INDEX_WHITE);
+  for (int x = HISTORY_LEN; --x >= 0; ) {
+    int val = max(40, cpuLoadHistory[(cpuLoadHistoryIndex + x) % HISTORY_LEN]);
+    gb.display.drawPixel(x, 128 - val + 40);
+  }
+}
+
 void update() {
   if (gb.buttons.held(BUTTON_A, 0)) {
-    gb.sound.fx(&Gamebuino_Meta::testTune);
+    gb.sound.fx(testTune);
+  }
+  if (gb.buttons.held(BUTTON_B, 0)) {
+    gb.sound.play(bumbleBotsSong, true);
+  }
+
+  cpuLoadHistory[cpuLoadHistoryIndex++] = gb.getCpuLoad();
+  if (cpuLoadHistoryIndex == HISTORY_LEN) {
+    cpuLoadHistoryIndex = 0;
   }
 }
 
 void draw() {
   gb.display.clear();
   displayCpuLoad();
+  drawCpuHistory();
 }
 
 void setup() {
