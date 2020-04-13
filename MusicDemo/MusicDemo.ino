@@ -1,35 +1,34 @@
 #include <Gamebuino-Meta.h>
 
-constexpr Gamebuino_Meta::WaveForm  WAV_TR = Gamebuino_Meta::WaveForm::TRIANGLE;
-constexpr Gamebuino_Meta::Effect FX_NONE = Gamebuino_Meta::Effect::NONE;
-constexpr Gamebuino_Meta::Effect FX_ARP = Gamebuino_Meta::Effect::ARPEGGIO;
-constexpr Gamebuino_Meta::Effect FX_ARPF = Gamebuino_Meta::Effect::ARPEGGIO_FAST;
+namespace Gamebuino_Meta {
 
-const Gamebuino_Meta::TuneSpec testTune = Gamebuino_Meta::TuneSpec {
+const TuneSpec testTune = TuneSpec {
     .noteDuration = 32,
     .loopStart = 16,
     .numNotes = 16,
-    .notes = new Gamebuino_Meta::NoteSpec[16] {
-        Gamebuino_Meta::NoteSpec { .note=Gamebuino_Meta::Note::A, .oct=4, .vol=8, .wav=WAV_TR, .fx=FX_NONE },
-        Gamebuino_Meta::NoteSpec { .note=Gamebuino_Meta::Note::B, .oct=4, .vol=7, .wav=WAV_TR, .fx=FX_NONE },
-        Gamebuino_Meta::NoteSpec { .note=Gamebuino_Meta::Note::C, .oct=4, .vol=6, .wav=WAV_TR, .fx=FX_ARP },
-        Gamebuino_Meta::NoteSpec { .note=Gamebuino_Meta::Note::D, .oct=4, .vol=5, .wav=WAV_TR, .fx=FX_NONE },
+    .notes = new NoteSpec[16] {
+        NoteSpec { .note=Note::A, .oct=4, .vol=8, .wav=WaveForm::TRIANGLE, .fx=Effect::NONE },
+        NoteSpec { .note=Note::B, .oct=4, .vol=7, .wav=WaveForm::TRIANGLE, .fx=Effect::NONE },
+        NoteSpec { .note=Note::C, .oct=4, .vol=6, .wav=WaveForm::TRIANGLE, .fx=Effect::ARPEGGIO },
+        NoteSpec { .note=Note::D, .oct=4, .vol=5, .wav=WaveForm::TRIANGLE, .fx=Effect::NONE },
 
-        Gamebuino_Meta::NoteSpec { .note=Gamebuino_Meta::Note::C, .oct=4, .vol=8, .wav=WAV_TR, .fx=FX_ARP },
-        Gamebuino_Meta::NoteSpec { .note=Gamebuino_Meta::Note::D, .oct=4, .vol=7, .wav=WAV_TR, .fx=FX_ARP },
-        Gamebuino_Meta::NoteSpec { .note=Gamebuino_Meta::Note::E, .oct=4, .vol=6, .wav=WAV_TR, .fx=FX_ARP },
-        Gamebuino_Meta::NoteSpec { .note=Gamebuino_Meta::Note::F, .oct=4, .vol=5, .wav=WAV_TR, .fx=FX_NONE },
+        NoteSpec { .note=Note::C, .oct=4, .vol=8, .wav=WaveForm::TRIANGLE, .fx=Effect::ARPEGGIO },
+        NoteSpec { .note=Note::D, .oct=4, .vol=7, .wav=WaveForm::TRIANGLE, .fx=Effect::ARPEGGIO },
+        NoteSpec { .note=Note::E, .oct=4, .vol=6, .wav=WaveForm::TRIANGLE, .fx=Effect::ARPEGGIO },
+        NoteSpec { .note=Note::F, .oct=4, .vol=5, .wav=WaveForm::TRIANGLE, .fx=Effect::NONE },
 
-        Gamebuino_Meta::NoteSpec { .note=Gamebuino_Meta::Note::A, .oct=4, .vol=8, .wav=WAV_TR, .fx=FX_NONE },
-        Gamebuino_Meta::NoteSpec { .note=Gamebuino_Meta::Note::B, .oct=4, .vol=8, .wav=WAV_TR, .fx=FX_NONE },
-        Gamebuino_Meta::NoteSpec { .note=Gamebuino_Meta::Note::C, .oct=4, .vol=8, .wav=WAV_TR, .fx=FX_NONE },
-        Gamebuino_Meta::NoteSpec { .note=Gamebuino_Meta::Note::D, .oct=4, .vol=8, .wav=WAV_TR, .fx=FX_ARPF },
-        Gamebuino_Meta::NoteSpec { .note=Gamebuino_Meta::Note::E, .oct=4, .vol=8, .wav=WAV_TR, .fx=FX_ARPF },
-        Gamebuino_Meta::NoteSpec { .note=Gamebuino_Meta::Note::F, .oct=4, .vol=8, .wav=WAV_TR, .fx=FX_ARPF },
-        Gamebuino_Meta::NoteSpec { .note=Gamebuino_Meta::Note::G, .oct=4, .vol=8, .wav=WAV_TR, .fx=FX_ARPF },
-        Gamebuino_Meta::NoteSpec { .note=Gamebuino_Meta::Note::A, .oct=5, .vol=6, .wav=WAV_TR, .fx=FX_NONE }
+        NoteSpec { .note=Note::A, .oct=4, .vol=8, .wav=WaveForm::TRIANGLE, .fx=Effect::NONE },
+        NoteSpec { .note=Note::B, .oct=4, .vol=8, .wav=WaveForm::TRIANGLE, .fx=Effect::NONE },
+        NoteSpec { .note=Note::C, .oct=4, .vol=8, .wav=WaveForm::TRIANGLE, .fx=Effect::NONE },
+        NoteSpec { .note=Note::D, .oct=4, .vol=8, .wav=WaveForm::TRIANGLE, .fx=Effect::ARPEGGIO_FAST },
+        NoteSpec { .note=Note::E, .oct=4, .vol=8, .wav=WaveForm::TRIANGLE, .fx=Effect::ARPEGGIO_FAST },
+        NoteSpec { .note=Note::F, .oct=4, .vol=8, .wav=WaveForm::TRIANGLE, .fx=Effect::ARPEGGIO_FAST },
+        NoteSpec { .note=Note::G, .oct=4, .vol=8, .wav=WaveForm::TRIANGLE, .fx=Effect::ARPEGGIO_FAST },
+        NoteSpec { .note=Note::A, .oct=5, .vol=6, .wav=WaveForm::TRIANGLE, .fx=Effect::NONE }
     }
 };
+
+} // Namespace
 
 void displayCpuLoad() {
   int cpuLoad = gb.getCpuLoad();
@@ -56,7 +55,7 @@ void displayCpuLoad() {
 
 void update() {
   if (gb.buttons.held(BUTTON_A, 0)) {
-    gb.sound.fx(&testTune);
+    gb.sound.fx(&Gamebuino_Meta::testTune);
   }
 }
 
