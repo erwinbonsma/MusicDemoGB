@@ -1,6 +1,4 @@
-#define DISPLAY_MODE DISPLAY_MODE_INDEX
-
-#define FOLDER_NAME "BumbleBotsRePair"
+#define FOLDER_NAME "MusicDemo"
 
 #define SOUND_FREQ 22050
 
