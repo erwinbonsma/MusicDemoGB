@@ -12,7 +12,7 @@ int tuneIndex;
 const char* text =
   "                     "
   "Sound & Music demo     "
-  "Version 0.1     "
+  "Version 0.2     "
   "Press A and B     "
   "Coding by Erwin Bonsma     "
   "Composition by Paul Bonsma";
