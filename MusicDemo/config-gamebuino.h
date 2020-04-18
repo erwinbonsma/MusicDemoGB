@@ -1,6 +1,6 @@
 #define FOLDER_NAME "MusicDemo"
 
-#define SOUND_FREQ 22050
+#define SOUND_FREQ 11025
 
 #define SOUND_CHANNELS 0
 
