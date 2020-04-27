@@ -1,13 +1,12 @@
 #include <Gamebuino-Meta.h>
 
-#include "Tune.h"
 #include "Song.h"
 
 constexpr int HISTORY_LEN = 80;
 int8_t cpuLoadHistory[HISTORY_LEN];
 int cpuLoadHistoryIndex;
-
-int tuneIndex;
+int8_t levelHistory[HISTORY_LEN];
+int levelHistoryIndex;
 
 const char* text =
   "                     "
@@ -34,13 +33,21 @@ void drawCpuHistory() {
   }
 }
 
-void update() {
-  if (gb.buttons.held(BUTTON_A, 0)) {
-    gb.sound.fx(exampleTunes[tuneIndex++]);
-    if (tuneIndex == numExampleTunes) {
-      tuneIndex = 0;
-    }
+void drawLevelHistory() {
+  gb.display.setColor(INDEX_WHITE);
+  for (int x = HISTORY_LEN; --x >= 0; ) {
+    int val = levelHistory[(levelHistoryIndex + x) % HISTORY_LEN];
+    gb.display.drawPixel(x, 63 - val);
   }
+}
+
+void update() {
+//  if (gb.buttons.held(BUTTON_A, 0)) {
+//    gb.sound.fx(exampleTunes[tuneIndex++]);
+//    if (tuneIndex == numExampleTunes) {
+//      tuneIndex = 0;
+//    }
+//  }
   if (gb.buttons.held(BUTTON_B, 0)) {
     if (gb.sound.isSongPlaying()) {
       gb.sound.stopSong();
@@ -52,6 +59,10 @@ void update() {
   cpuLoadHistory[cpuLoadHistoryIndex++] = gb.getCpuLoad();
   if (cpuLoadHistoryIndex == HISTORY_LEN) {
     cpuLoadHistoryIndex = 0;
+  }
+  levelHistory[levelHistoryIndex++] = gb.sound.getLevel();
+  if (levelHistoryIndex == HISTORY_LEN) {
+    levelHistoryIndex = 0;
   }
 
   textIndex++;
@@ -69,6 +80,7 @@ void draw() {
   gb.display.print(text + (textIndex >> 2));
 
   drawCpuHistory();
+  drawLevelHistory();
 }
 
 void setup() {
