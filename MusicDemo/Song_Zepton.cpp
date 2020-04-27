@@ -1,4 +1,4 @@
-#include <Gamebuino-Meta.h>
+#include "Song_Zepton.h"
 
 namespace Gamebuino_Meta {
 
@@ -495,7 +495,7 @@ const PatternSpec *const song0PatternsZepton[8] = {
     &pattern0Zepton,
 };
 const SongSpec song0Zepton = SongSpec {
-    .loopStart = 0, .numPatterns = 1, .patterns = song0PatternsZepton
+    .loopStart = 0, .numPatterns = 8, .patterns = song0PatternsZepton
 };
 const PatternSpec *const song8PatternsZepton[4] = {
     &pattern8Zepton,

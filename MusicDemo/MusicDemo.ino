@@ -1,25 +1,33 @@
 #include <Gamebuino-Meta.h>
 
+#include "Song_AlexKidd.h"
 #include "Song_BumbleBots.h"
 #include "Song_RockForMetal.h"
 #include "Song_Zepton.h"
 
-constexpr int NUM_SONGS = 4;
+constexpr int NUM_SONGS = 7;
 int songIndex;
-const Gamebuino_Meta::SongSpec* songs[4] = {
+const Gamebuino_Meta::SongSpec* songs[NUM_SONGS] = {
   bumbleBotsSong,
   rockForMetalSong,
   zeptonSong1,
-  zeptonSong2
+  zeptonSong2,
+  alexKiddSong1,
+  alexKiddSong2,
+  alexKiddSong3,
 };
 
 const char *const titleBumbleBots = "Bumble Bots";
 const char *const titleRockForMetal = "Rock For Metal";
 const char *const titleZepton1 = "Zepton #1";
 const char *const titleZepton2 = "Zepton #2";
+const char *const titleAlexKidd1 = "Alex Kidd #1";
+const char *const titleAlexKidd2 = "Alex Kidd #2";
+const char *const titleAlexKidd3 = "Alex Kidd #3";
 const char *const creditsBumbleBots = "Paul Bonsma";
 const char *const creditsRockForMetal = "Jumalauta";
 const char *const creditsZepton = "rez";
+const char *const creditsAlexKidd = "Domarius";
 
 struct MetaSpec {
   const char *const title;
@@ -31,6 +39,9 @@ const MetaSpec songInfo[NUM_SONGS] = {
   MetaSpec { .title =  titleRockForMetal, .credits = creditsRockForMetal },
   MetaSpec { .title =  titleZepton1, .credits = creditsZepton },
   MetaSpec { .title =  titleZepton2, .credits = creditsZepton },
+  MetaSpec { .title =  titleAlexKidd1, .credits = creditsAlexKidd },
+  MetaSpec { .title =  titleAlexKidd2, .credits = creditsAlexKidd },
+  MetaSpec { .title =  titleAlexKidd3, .credits = creditsAlexKidd },
 };
 
 constexpr int HISTORY_LEN = 80;
@@ -62,6 +73,21 @@ void drawLevelHistory() {
   }
 }
 
+char songLenBuf[8];
+void updateSongInfo() {
+  int len = songs[songIndex]->lengthInSeconds();
+  snprintf(songLenBuf, 8, "%d:%02d", len / 60, len % 60);
+}
+
+void nextSong() {
+  ++songIndex;
+  if (songIndex == NUM_SONGS) {
+    songIndex = 0;
+  }
+
+  updateSongInfo();
+}
+
 void update() {
   if (gb.buttons.held(BUTTON_A, 0)) {
     if (gb.sound.isSongPlaying()) {
@@ -71,10 +97,7 @@ void update() {
     }
   }
   if (gb.buttons.held(BUTTON_B, 0)) {
-    ++songIndex;
-    if (songIndex == NUM_SONGS) {
-      songIndex = 0;
-    }
+    nextSong();
     if (gb.sound.isSongPlaying()) {
       gb.sound.playSong(songs[songIndex], true);
     }
@@ -94,6 +117,8 @@ void draw() {
   gb.display.clear();
 
   gb.display.setColor(INDEX_WHITE);
+  gb.display.setCursor(64, 0);
+  gb.display.print(songLenBuf);
   gb.display.setCursor(0, 0);
   gb.display.println(songInfo[songIndex].title);
   gb.display.printf("by %s\n", songInfo[songIndex].credits);
@@ -105,6 +130,7 @@ void draw() {
 
 void setup() {
   gb.begin();
+  updateSongInfo();
 }
 
 void loop() {
