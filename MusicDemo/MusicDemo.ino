@@ -1,6 +1,6 @@
 #include <Gamebuino-Meta.h>
 
-#include "Song.h"
+#include "Song_BumbleBots.h"
 #include "Song_RockForMetal.h"
 #include "Song_Zepton.h"
 
@@ -11,6 +11,11 @@ const Gamebuino_Meta::SongSpec* songs[4] = {
   rockForMetalSong,
   zeptonSong1,
   zeptonSong2
+};
+
+struct MetaSpec {
+  const char* title;
+  const char* credits;
 };
 
 constexpr int HISTORY_LEN = 80;
