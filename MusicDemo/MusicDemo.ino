@@ -1,6 +1,17 @@
 #include <Gamebuino-Meta.h>
 
 #include "Song.h"
+#include "Song_RockForMetal.h"
+#include "Song_Zepton.h"
+
+constexpr int NUM_SONGS = 4;
+int songIndex;
+const Gamebuino_Meta::SongSpec* songs[4] = {
+  bumbleBotsSong,
+  rockForMetalSong,
+  zeptonSong1,
+  zeptonSong2
+};
 
 constexpr int HISTORY_LEN = 80;
 int8_t cpuLoadHistory[HISTORY_LEN];
@@ -42,17 +53,17 @@ void drawLevelHistory() {
 }
 
 void update() {
-//  if (gb.buttons.held(BUTTON_A, 0)) {
-//    gb.sound.fx(exampleTunes[tuneIndex++]);
-//    if (tuneIndex == numExampleTunes) {
-//      tuneIndex = 0;
-//    }
-//  }
-  if (gb.buttons.held(BUTTON_B, 0)) {
+  if (gb.buttons.held(BUTTON_A, 0)) {
     if (gb.sound.isSongPlaying()) {
       gb.sound.stopSong();
     } else {
-      gb.sound.playSong(bumbleBotsSong, true);
+      gb.sound.playSong(songs[songIndex], true);
+    }
+  }
+  if (gb.buttons.held(BUTTON_B, 0)) {
+    ++songIndex;
+    if (songIndex == NUM_SONGS) {
+      songIndex = 0;
     }
   }
 
@@ -81,11 +92,16 @@ void draw() {
 
   drawCpuHistory();
   drawLevelHistory();
+
+  gb.display.setCursor(0, 0);
+  gb.display.print(gb.getFreeRam());
 }
 
 void setup() {
   gb.begin();
   textLen = strlen(text);
+
+  zeptonSong1 = zeptonSong2;
 }
 
 void loop() {
