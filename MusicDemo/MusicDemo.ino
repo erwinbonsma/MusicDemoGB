@@ -1,5 +1,7 @@
 #include <Gamebuino-Meta.h>
 
+#include "Buttons.h"
+
 #include "Song_AlexKidd.h"
 #include "Song_BumbleBots.h"
 #include "Song_Neon.h"
@@ -58,6 +60,8 @@ int cpuLoadHistoryIndex;
 int8_t levelHistory[HISTORY_LEN];
 int levelHistoryIndex;
 
+Buttons buttons;
+
 void drawCpuHistory() {
   for (int x = HISTORY_LEN; --x >= 0; ) {
     int val = max(45, cpuLoadHistory[(cpuLoadHistoryIndex + x) % HISTORY_LEN]);
@@ -87,6 +91,16 @@ void updateSongInfo() {
   snprintf(songLenBuf, 8, "%d:%02d", len / 60, len % 60);
 }
 
+void prevSong() {
+  if (songIndex == 0) {
+    songIndex = NUM_SONGS - 1;
+  } else {
+    --songIndex;
+  }
+
+  updateSongInfo();
+}
+
 void nextSong() {
   ++songIndex;
   if (songIndex == NUM_SONGS) {
@@ -97,15 +111,27 @@ void nextSong() {
 }
 
 void update() {
+  buttons.update();
+
   if (gb.buttons.held(BUTTON_A, 0)) {
     if (gb.sound.isSongPlaying()) {
+      buttons.click(PlayerButton::Stop);
       gb.sound.stopSong();
     } else {
+      buttons.click(PlayerButton::Play);
       gb.sound.playSong(songs[songIndex], true);
     }
   }
-  if (gb.buttons.held(BUTTON_B, 0)) {
+  if (gb.buttons.held(BUTTON_LEFT, 0)) {
+    prevSong();
+    buttons.click(PlayerButton::Prev);
+    if (gb.sound.isSongPlaying()) {
+      gb.sound.playSong(songs[songIndex], true);
+    }
+  }
+  if (gb.buttons.held(BUTTON_RIGHT, 0)) {
     nextSong();
+    buttons.click(PlayerButton::Next);
     if (gb.sound.isSongPlaying()) {
       gb.sound.playSong(songs[songIndex], true);
     }
@@ -122,7 +148,7 @@ void update() {
 }
 
 void draw() {
-  gb.display.clear();
+  gb.display.clear(INDEX_GRAY);
 
   gb.display.setColor(INDEX_WHITE);
   gb.display.setCursor(64, 0);
@@ -131,9 +157,11 @@ void draw() {
   gb.display.println(songInfo[songIndex].title);
   gb.display.printf("by %s\n", songInfo[songIndex].credits);
 
-  drawCpuHistory();
-  drawLevelHistory();
-  gb.display.println(gb.getFreeRam());
+//  drawCpuHistory();
+//  drawLevelHistory();
+//  gb.display.println(gb.getFreeRam());
+
+  buttons.draw();
 }
 
 void setup() {
