@@ -146,9 +146,24 @@ void update() {
   }
 }
 
-void drawSongTime() {
+void drawDisplay(int x, int y, int w, int h) {
+  gb.display.setColor(INDEX_BLACK);
+  gb.display.fillRect(x + 1, y + 1, w - 2, h - 2);
+
+  gb.display.setColor(INDEX_DARKGRAY);
+  gb.display.drawFastHLine(x, y, w - 1);
+  gb.display.drawFastVLine(x, y + 1, h - 2);
+
   gb.display.setColor(INDEX_WHITE);
-  gb.display.setCursor(64, 0);
+  gb.display.drawFastHLine(x + 1, y + h - 1, w - 1);
+  gb.display.drawFastVLine(x + w - 1, y + 1, h - 2);
+}
+
+void drawSongTime() {
+  drawDisplay(55, 20, 23, 9);
+
+  gb.display.setColor(INDEX_BROWN);
+  gb.display.setCursor(57, 22);
 
   int len;
   if (gb.sound.isSongPlaying() || gb.sound.isSongPaused()) {
@@ -156,18 +171,33 @@ void drawSongTime() {
   } else {
     len = songs[songIndex]->lengthInSeconds();
   }
-  gb.display.printf("%d:%02d", len / 60, len % 60);
+  gb.display.printf("%02d:%02d", len / 60, len % 60);
+}
+
+void drawTrackNumber() {
+  drawDisplay(2, 20, 23, 9);
+
+  gb.display.setColor(INDEX_BROWN);
+  gb.display.setCursor(4, 22);
+
+  gb.display.printf("%02d/%02d", (songIndex + 1), NUM_SONGS);
+}
+
+void drawSongInfo() {
+  drawDisplay(2, 2, 76, 16);
+  gb.display.setColor(INDEX_BROWN);
+  gb.display.setCursor(4, 4);
+  gb.display.print(songInfo[songIndex].title);
+  gb.display.setCursor(4, 10);
+  gb.display.printf("by %s\n", songInfo[songIndex].credits);
 }
 
 void draw() {
   gb.display.clear(INDEX_GRAY);
 
   drawSongTime();
-
-  gb.display.setColor(INDEX_WHITE);
-  gb.display.setCursor(0, 0);
-  gb.display.println(songInfo[songIndex].title);
-  gb.display.printf("by %s\n", songInfo[songIndex].credits);
+  drawSongInfo();
+  drawTrackNumber();
 
 //  drawCpuHistory();
 //  drawLevelHistory();
