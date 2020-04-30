@@ -104,33 +104,32 @@ void update() {
   buttons.update();
 
   if (gb.buttons.held(BUTTON_A, 0)) {
+    buttons.playButton().click();
     if (gb.sound.isSongPlaying()) {
-      buttons.click(PlayerButton::Stop);
-      gb.sound.stopSong();
+      gb.sound.pauseSong(true);
     } else {
-      buttons.click(PlayerButton::Play);
-      gb.sound.playSong(songs[songIndex], true);
+      if (gb.sound.isSongPaused()) {
+        gb.sound.pauseSong(false);
+      } else {
+        gb.sound.playSong(songs[songIndex], true);
+      }
     }
   }
   if (gb.buttons.held(BUTTON_B, 0)) {
-    buttons.click(PlayerButton::Pause);
-    if (gb.sound.isSongPlaying() || gb.sound.isSongPaused()) {
-      gb.sound.pauseSong( !gb.sound.isSongPaused() );
-    } else {
-      // Ignore. If song is stopped, pausing has no effect
-    }
+    buttons.stopButton().click();
+    gb.sound.stopSong();
   }
 
   if (gb.buttons.held(BUTTON_LEFT, 0)) {
     prevSong();
-    buttons.click(PlayerButton::Prev);
+    buttons.prevButton().click();
     if (gb.sound.isSongPlaying()) {
       gb.sound.playSong(songs[songIndex], true);
     }
   }
   if (gb.buttons.held(BUTTON_RIGHT, 0)) {
     nextSong();
-    buttons.click(PlayerButton::Next);
+    buttons.nextButton().click();
     if (gb.sound.isSongPlaying()) {
       gb.sound.playSong(songs[songIndex], true);
     }
