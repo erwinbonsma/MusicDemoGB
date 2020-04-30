@@ -85,20 +85,12 @@ void drawLevelHistory() {
   }
 }
 
-char songLenBuf[8];
-void updateSongInfo() {
-  int len = songs[songIndex]->lengthInSeconds();
-  snprintf(songLenBuf, 8, "%d:%02d", len / 60, len % 60);
-}
-
 void prevSong() {
   if (songIndex == 0) {
     songIndex = NUM_SONGS - 1;
   } else {
     --songIndex;
   }
-
-  updateSongInfo();
 }
 
 void nextSong() {
@@ -106,8 +98,6 @@ void nextSong() {
   if (songIndex == NUM_SONGS) {
     songIndex = 0;
   }
-
-  updateSongInfo();
 }
 
 void update() {
@@ -122,6 +112,15 @@ void update() {
       gb.sound.playSong(songs[songIndex], true);
     }
   }
+  if (gb.buttons.held(BUTTON_B, 0)) {
+    buttons.click(PlayerButton::Pause);
+    if (gb.sound.isSongPlaying() || gb.sound.isSongPaused()) {
+      gb.sound.pauseSong( !gb.sound.isSongPaused() );
+    } else {
+      // Ignore. If song is stopped, pausing has no effect
+    }
+  }
+
   if (gb.buttons.held(BUTTON_LEFT, 0)) {
     prevSong();
     buttons.click(PlayerButton::Prev);
@@ -147,12 +146,25 @@ void update() {
   }
 }
 
+void drawSongTime() {
+  gb.display.setColor(INDEX_WHITE);
+  gb.display.setCursor(64, 0);
+
+  int len;
+  if (gb.sound.isSongPlaying() || gb.sound.isSongPaused()) {
+    len = gb.sound.songProgressInSeconds();
+  } else {
+    len = songs[songIndex]->lengthInSeconds();
+  }
+  gb.display.printf("%d:%02d", len / 60, len % 60);
+}
+
 void draw() {
   gb.display.clear(INDEX_GRAY);
 
+  drawSongTime();
+
   gb.display.setColor(INDEX_WHITE);
-  gb.display.setCursor(64, 0);
-  gb.display.print(songLenBuf);
   gb.display.setCursor(0, 0);
   gb.display.println(songInfo[songIndex].title);
   gb.display.printf("by %s\n", songInfo[songIndex].credits);
@@ -166,7 +178,6 @@ void draw() {
 
 void setup() {
   gb.begin();
-  updateSongInfo();
 }
 
 void loop() {
