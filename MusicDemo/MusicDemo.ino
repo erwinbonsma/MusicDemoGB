@@ -54,7 +54,7 @@ const MetaSpec songInfo[NUM_SONGS] = {
   MetaSpec { .title =  titleTheLair3, .credits = creditsTheLair },
 };
 
-constexpr int HISTORY_LEN = 80;
+constexpr int HISTORY_LEN = 25;
 int8_t cpuLoadHistory[HISTORY_LEN];
 int cpuLoadHistoryIndex;
 int8_t levelHistory[HISTORY_LEN];
@@ -160,25 +160,26 @@ void drawDisplay(int x, int y, int w, int h) {
 }
 
 void drawSongTime() {
-  drawDisplay(55, 20, 23, 9);
-
-  gb.display.setColor(INDEX_BROWN);
-  gb.display.setCursor(57, 22);
-
   int len;
   if (gb.sound.isSongPlaying() || gb.sound.isSongPaused()) {
     len = gb.sound.songProgressInSeconds();
   } else {
     len = songs[songIndex]->lengthInSeconds();
   }
+
+  drawDisplay(55, 21, 23, 9);
+
+  gb.display.setColor(INDEX_BROWN);
+  gb.display.setCursor(57, 23);
+
   gb.display.printf("%02d:%02d", len / 60, len % 60);
 }
 
 void drawTrackNumber() {
-  drawDisplay(2, 20, 23, 9);
+  drawDisplay(2, 21, 23, 9);
 
   gb.display.setColor(INDEX_BROWN);
-  gb.display.setCursor(4, 22);
+  gb.display.setCursor(4, 23);
 
   gb.display.printf("%02d/%02d", (songIndex + 1), NUM_SONGS);
 }
@@ -192,12 +193,34 @@ void drawSongInfo() {
   gb.display.printf("by %s\n", songInfo[songIndex].credits);
 }
 
+void drawOutputLevel() {
+  drawDisplay(6, 33, 68, 10);
+
+  int minLevel = 64;
+  int maxLevel = 0;
+  for (int i = HISTORY_LEN; --i >= 0;  ) {
+    int level = levelHistory[i];
+    minLevel = min(minLevel, level);
+    maxLevel = max(maxLevel, level);
+  }
+
+  gb.display.setColor(INDEX_BROWN);
+  gb.display.fillRect(7, 35, levelHistory[(levelHistoryIndex + HISTORY_LEN - 1) % HISTORY_LEN], 6);
+
+  gb.display.setColor(INDEX_ORANGE);
+  gb.display.drawFastVLine(7 + minLevel, 35, 6);
+
+  gb.display.setColor(INDEX_YELLOW);
+  gb.display.drawFastVLine(7 + maxLevel, 35, 6);
+}
+
 void draw() {
   gb.display.clear(INDEX_GRAY);
 
   drawSongTime();
   drawSongInfo();
   drawTrackNumber();
+  drawOutputLevel();
 
 //  drawCpuHistory();
 //  drawLevelHistory();
