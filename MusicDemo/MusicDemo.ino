@@ -1,6 +1,7 @@
 #include <Gamebuino-Meta.h>
 
 #include "Buttons.h"
+#include "Images.h"
 
 #include "Song_AlexKidd.h"
 #include "Song_BumbleBots.h"
@@ -170,19 +171,19 @@ void drawSongTime() {
     len = songs[songIndex]->lengthInSeconds();
   }
 
-  drawDisplay(55, 21, 23, 9);
+  drawDisplay(51, 22, 23, 9);
 
   gb.display.setColor(INDEX_BROWN);
-  gb.display.setCursor(57, 23);
+  gb.display.setCursor(53, 24);
 
   gb.display.printf("%02d:%02d", len / 60, len % 60);
 }
 
 void drawTrackNumber() {
-  drawDisplay(2, 21, 23, 9);
+  drawDisplay(6, 22, 23, 9);
 
   gb.display.setColor(INDEX_BROWN);
-  gb.display.setCursor(4, 23);
+  gb.display.setCursor(8, 24);
 
   gb.display.printf("%02d/%02d", (songIndex + 1), NUM_SONGS);
 }
@@ -197,7 +198,7 @@ void drawSongInfo() {
 }
 
 void drawOutputLevel() {
-  drawDisplay(6, 33, 68, 10);
+  drawDisplay(6, 36, 68, 10);
 
   int minLevel = 64;
   int maxLevel = 0;
@@ -208,13 +209,17 @@ void drawOutputLevel() {
   }
 
   gb.display.setColor(INDEX_BROWN);
-  gb.display.fillRect(7, 35, levelHistory[(levelHistoryIndex + HISTORY_LEN - 1) % HISTORY_LEN], 6);
+  gb.display.fillRect(7, 37, levelHistory[(levelHistoryIndex + HISTORY_LEN - 1) % HISTORY_LEN], 6);
 
   gb.display.setColor(INDEX_ORANGE);
-  gb.display.drawFastVLine(7 + minLevel, 35, 6);
+  gb.display.drawFastVLine(7 + minLevel, 37, 6);
 
   gb.display.setColor(INDEX_YELLOW);
-  gb.display.drawFastVLine(7 + maxLevel, 35, 6);
+  gb.display.drawFastVLine(7 + maxLevel, 37, 6);
+}
+
+void drawLogo() {
+  gb.display.drawImage(34, 20, logoImage);
 }
 
 void draw() {
@@ -224,6 +229,7 @@ void draw() {
   drawSongInfo();
   drawTrackNumber();
   drawOutputLevel();
+  drawLogo();
 
 //  drawCpuHistory();
 //  drawLevelHistory();

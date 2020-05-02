@@ -2,3 +2,4 @@
 
 extern Image buttonsImage;
 extern Image toggleButtonImage;
+extern Image logoImage;

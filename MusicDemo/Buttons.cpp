@@ -79,11 +79,11 @@ void ToggleButtonControl::draw() {
 }
 
 Buttons::Buttons() {
-  _buttons[0].init( 3, 48, 0);
-  _buttons[1].init(18, 48, 2);
-  _buttons[2].init(49, 48, 3);
-  _buttons[3].init(64, 48, 4);
-  _toggleButton.init(33, 48, 0);
+  _buttons[0].init( 3, 49, 0);
+  _buttons[1].init(18, 49, 2);
+  _buttons[2].init(49, 49, 3);
+  _buttons[3].init(64, 49, 4);
+  _toggleButton.init(33, 49, 0);
 }
 
 void Buttons::update() {
