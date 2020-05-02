@@ -134,6 +134,10 @@ void update() {
       gb.sound.playSong(songs[songIndex], true);
     }
   }
+  if (gb.buttons.held(BUTTON_UP, 0)) {
+    buttons.repeatButton().click();
+    gb.sound.loopSong(buttons.repeatButton().isEnabled());
+  }
 
   cpuLoadHistory[cpuLoadHistoryIndex++] = gb.getCpuLoad();
   if (cpuLoadHistoryIndex == HISTORY_LEN) {
