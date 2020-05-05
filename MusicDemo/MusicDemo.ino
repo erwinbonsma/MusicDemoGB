@@ -6,10 +6,12 @@
 #include "Song_AlexKidd.h"
 #include "Song_BumbleBots.h"
 #include "Song_Neon.h"
+#include "Song_Porklike.h"
 #include "Song_RockForMetal.h"
 #include "Song_TheLair.h"
+#include "Song_Wintergolf.h"
 
-constexpr int NUM_SONGS = 9;
+constexpr int NUM_SONGS = 11;
 int songIndex;
 const Gamebuino_Meta::SongSpec* songs[NUM_SONGS] = {
   bumbleBotsSong,
@@ -21,6 +23,8 @@ const Gamebuino_Meta::SongSpec* songs[NUM_SONGS] = {
   theLairSong1,
   theLairSong2,
   theLairSong3,
+  wintergolfSong,
+  porklikeSong
 };
 
 const char *const titleBumbleBots = "Bumble Bots";
@@ -32,11 +36,13 @@ const char *const titleNeon = "Neon";
 const char *const titleTheLair1 = "The Lair #1";
 const char *const titleTheLair2 = "The Lair #2";
 const char *const titleTheLair3 = "The Lair #3";
+const char *const titleWintergolf = "Wintergolf";
 const char *const creditsBumbleBots = "Paul Bonsma";
 const char *const creditsRockForMetal = "Jumalauta";
 const char *const creditsAlexKidd = "Domarius";
 const char *const creditsNeon = "Luca Harris";
 const char *const creditsTheLair = "Gruber Music";
+const char *const creditsWintergolf = creditsTheLair;
 
 struct MetaSpec {
   const char *const title;
@@ -53,6 +59,8 @@ const MetaSpec songInfo[NUM_SONGS] = {
   MetaSpec { .title =  titleTheLair1, .credits = creditsTheLair },
   MetaSpec { .title =  titleTheLair2, .credits = creditsTheLair },
   MetaSpec { .title =  titleTheLair3, .credits = creditsTheLair },
+  MetaSpec { .title =  titleWintergolf, .credits = creditsWintergolf },
+  MetaSpec { .title = "Porklike", .credits = "Krystian Majewski" },
 };
 
 constexpr int HISTORY_LEN = 25;
