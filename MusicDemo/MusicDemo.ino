@@ -26,22 +26,8 @@ const Gamebuino_Meta::SongSpec* songs[NUM_SONGS] = {
   porklikeSong
 };
 
-const char *const titleBumbleBots = "Bumble Bots";
-const char *const titleRockForMetal = "Rock For Metal";
-const char *const titleAlexKidd1 = "Alex Kidd #1";
-const char *const titleAlexKidd2 = "Alex Kidd #2";
-const char *const titleAlexKidd3 = "Alex Kidd #3";
-const char *const titleNeon = "Neon";
-const char *const titleTheLair1 = "The Lair #1";
-const char *const titleTheLair2 = "The Lair #2";
-const char *const titleTheLair3 = "The Lair #3";
-const char *const titleWintergolf = "Wintergolf";
-const char *const creditsBumbleBots = "Paul Bonsma";
-const char *const creditsRockForMetal = "Jumalauta";
-const char *const creditsAlexKidd = "Domarius";
-const char *const creditsNeon = "Luca Harris";
-const char *const creditsTheLair = "Gruber Music";
-const char *const creditsWintergolf = creditsTheLair;
+const char *const creditsDomarius = "Domarius";
+const char *const creditsGruberMusic = "Gruber Music";
 
 struct MetaSpec {
   const char *const title;
@@ -49,16 +35,16 @@ struct MetaSpec {
 };
 
 const MetaSpec songInfo[NUM_SONGS] = {
-  MetaSpec { .title =  titleBumbleBots, .credits = creditsBumbleBots },
-  MetaSpec { .title =  titleRockForMetal, .credits = creditsRockForMetal },
-  MetaSpec { .title =  titleAlexKidd1, .credits = creditsAlexKidd },
-  MetaSpec { .title =  titleAlexKidd2, .credits = creditsAlexKidd },
-  MetaSpec { .title =  titleAlexKidd3, .credits = creditsAlexKidd },
-  MetaSpec { .title =  titleNeon, .credits = creditsNeon },
-  MetaSpec { .title =  titleTheLair1, .credits = creditsTheLair },
-  MetaSpec { .title =  titleTheLair2, .credits = creditsTheLair },
-  MetaSpec { .title =  titleTheLair3, .credits = creditsTheLair },
-  MetaSpec { .title =  titleWintergolf, .credits = creditsWintergolf },
+  MetaSpec { .title = "Bumble Bots", .credits = "Paul Bonsma" },
+  MetaSpec { .title = "Rock for Metal", .credits = "Jumalauta" },
+  MetaSpec { .title = "Alex Kidd #1", .credits = creditsDomarius },
+  MetaSpec { .title = "Alex Kidd #2", .credits = creditsDomarius },
+  MetaSpec { .title = "Alex Kidd #3", .credits = creditsDomarius },
+  MetaSpec { .title = "Neon", .credits = "Luca Harris" },
+  MetaSpec { .title = "The Lair #1", .credits = creditsGruberMusic },
+  MetaSpec { .title = "The Lair #2", .credits = creditsGruberMusic },
+  MetaSpec { .title = "The Lair 3", .credits = creditsGruberMusic },
+  MetaSpec { .title = "Wintergolf", .credits = creditsGruberMusic },
   MetaSpec { .title = "Porklike", .credits = "Krystian Majewski" },
 };
 
