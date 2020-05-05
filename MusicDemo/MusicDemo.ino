@@ -155,19 +155,19 @@ void drawSongTime() {
     len = songs[songIndex]->lengthInSeconds();
   }
 
-  drawDisplay(51, 22, 23, 9);
+  drawDisplay(51, 23, 23, 9);
 
   gb.display.setColor(INDEX_BROWN);
-  gb.display.setCursor(53, 24);
+  gb.display.setCursor(53, 25);
 
   gb.display.printf("%02d:%02d", len / 60, len % 60);
 }
 
 void drawTrackNumber() {
-  drawDisplay(6, 22, 23, 9);
+  drawDisplay(6, 23, 23, 9);
 
   gb.display.setColor(INDEX_BROWN);
-  gb.display.setCursor(8, 24);
+  gb.display.setCursor(8, 25);
 
   gb.display.printf("%02d/%02d", (songIndex + 1), NUM_SONGS);
 }
@@ -182,7 +182,7 @@ void drawSongInfo() {
 }
 
 void drawOutputLevel() {
-  drawDisplay(6, 36, 68, 10);
+  drawDisplay(6, 37, 68, 9);
 
   int minLevel = 64;
   int maxLevel = 0;
@@ -193,13 +193,13 @@ void drawOutputLevel() {
   }
 
   gb.display.setColor(INDEX_BROWN);
-  gb.display.fillRect(7, 37, levelHistory[(levelHistoryIndex + HISTORY_LEN - 1) % HISTORY_LEN], 6);
+  gb.display.fillRect(8, 39, levelHistory[(levelHistoryIndex + HISTORY_LEN - 1) % HISTORY_LEN], 5);
 
   gb.display.setColor(INDEX_ORANGE);
-  gb.display.drawFastVLine(7 + minLevel, 37, 6);
+  gb.display.drawFastVLine(8 + minLevel, 39, 5);
 
   gb.display.setColor(INDEX_YELLOW);
-  gb.display.drawFastVLine(7 + maxLevel, 37, 6);
+  gb.display.drawFastVLine(8 + maxLevel, 39, 5);
 }
 
 void drawLogo() {
