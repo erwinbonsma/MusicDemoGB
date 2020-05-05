@@ -12,7 +12,6 @@
 #include "Song_Wintergolf.h"
 
 constexpr int NUM_SONGS = 11;
-int songIndex;
 const Gamebuino_Meta::SongSpec* songs[NUM_SONGS] = {
   bumbleBotsSong,
   rockForMetalSong,
@@ -70,6 +69,8 @@ int8_t levelHistory[HISTORY_LEN];
 int levelHistoryIndex;
 
 Buttons buttons;
+int songIndex;
+bool playing;
 
 void drawCpuHistory() {
   for (int x = HISTORY_LEN; --x >= 0; ) {
@@ -109,38 +110,50 @@ void nextSong() {
   }
 }
 
+void playSong() {
+  gb.sound.playSong(songs[songIndex], buttons.repeatButton().isEnabled());
+}
+
 void update() {
   buttons.update();
 
+  if (playing && !gb.sound.isSongPlaying()) {
+    // Song just finished. Go to next
+    nextSong();
+    playSong();
+  }
+
   if (gb.buttons.held(BUTTON_A, 0)) {
     buttons.playButton().click();
-    if (gb.sound.isSongPlaying()) {
+    playing = !playing;
+    if (!playing) {
       gb.sound.pauseSong(true);
     } else {
       if (gb.sound.isSongPaused()) {
         gb.sound.pauseSong(false);
       } else {
-        gb.sound.playSong(songs[songIndex], true);
+        playSong();
       }
     }
   }
   if (gb.buttons.held(BUTTON_B, 0)) {
     buttons.stopButton().click();
+    playing = false;
     gb.sound.stopSong();
   }
 
   if (gb.buttons.held(BUTTON_LEFT, 0)) {
-    prevSong();
     buttons.prevButton().click();
-    if (gb.sound.isSongPlaying()) {
-      gb.sound.playSong(songs[songIndex], true);
+    prevSong();
+    if (playing) {
+      playSong();
     }
   }
   if (gb.buttons.held(BUTTON_RIGHT, 0)) {
-    nextSong();
     buttons.nextButton().click();
-    if (gb.sound.isSongPlaying()) {
-      gb.sound.playSong(songs[songIndex], true);
+    nextSong();
+    if (playing) {
+      playSong();
     }
   }
   if (gb.buttons.held(BUTTON_UP, 0)) {
