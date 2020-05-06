@@ -80,6 +80,10 @@ void playSong() {
   gb.sound.playSong(songs[songIndex], buttons.repeatButton().isEnabled());
 }
 
+void stopSong() {
+  gb.sound.stopSong();
+}
+
 void update() {
   buttons.update();
 
@@ -105,7 +109,7 @@ void update() {
   if (gb.buttons.held(BUTTON_B, 0)) {
     buttons.stopButton().click();
     playing = false;
-    gb.sound.stopSong();
+    stopSong();
   }
 
   if (gb.buttons.held(BUTTON_LEFT, 0)) {
@@ -113,6 +117,8 @@ void update() {
     prevSong();
     if (playing) {
       playSong();
+    } else {
+      stopSong();
     }
   }
   if (gb.buttons.held(BUTTON_RIGHT, 0)) {
@@ -120,6 +126,8 @@ void update() {
     nextSong();
     if (playing) {
       playSong();
+    } else {
+      stopSong();
     }
   }
   if (gb.buttons.held(BUTTON_UP, 0)) {
