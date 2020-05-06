@@ -11,9 +11,10 @@
 #include "Song_TheLair.h"
 #include "Song_Wintergolf.h"
 
-constexpr int NUM_SONGS = 11;
+constexpr int NUM_SONGS = 12;
 const Gamebuino_Meta::SongSpec* songs[NUM_SONGS] = {
-  bumbleBotsSong,
+  bumbleBotsSong1,
+  bumbleBotsSong2,
   rockForMetalSong,
   alexKiddSong1,
   alexKiddSong2,
@@ -26,6 +27,7 @@ const Gamebuino_Meta::SongSpec* songs[NUM_SONGS] = {
   porklikeSong
 };
 
+const char *const creditsPaul = "Paul Bonsma";
 const char *const creditsDomarius = "Domarius";
 const char *const creditsGruberMusic = "Gruber Music";
 
@@ -35,7 +37,8 @@ struct MetaSpec {
 };
 
 const MetaSpec songInfo[NUM_SONGS] = {
-  MetaSpec { .title = "Bumble Bots", .credits = "Paul Bonsma" },
+  MetaSpec { .title = "Bumble Bots #1", .credits = creditsPaul },
+  MetaSpec { .title = "Bumble Bots #2", .credits = creditsPaul },
   MetaSpec { .title = "Rock for Metal", .credits = "Jumalauta" },
   MetaSpec { .title = "Alex Kidd #1", .credits = creditsDomarius },
   MetaSpec { .title = "Alex Kidd #2", .credits = creditsDomarius },
