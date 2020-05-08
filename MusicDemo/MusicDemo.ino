@@ -4,6 +4,7 @@
 #include "Images.h"
 
 #include "Song_AlexKidd.h"
+#include "Song_BubbleBobble.h"
 #include "Song_BumbleBots.h"
 #include "Song_Neon.h"
 #include "Song_Porklike.h"
@@ -11,7 +12,7 @@
 #include "Song_TheLair.h"
 #include "Song_Wintergolf.h"
 
-constexpr int NUM_SONGS = 12;
+constexpr int NUM_SONGS = 14;
 const Gamebuino_Meta::SongSpec* songs[NUM_SONGS] = {
   bumbleBotsSong1,
   bumbleBotsSong2,
@@ -24,9 +25,12 @@ const Gamebuino_Meta::SongSpec* songs[NUM_SONGS] = {
   theLairSong2,
   theLairSong3,
   wintergolfSong,
-  porklikeSong
+  porklikeSong,
+  bubbleBobbleSong1,
+  bubbleBobbleSong2
 };
 
+const char *const creditsPahammond = "pahammond";
 const char *const creditsPaul = "Paul Bonsma";
 const char *const creditsDomarius = "Domarius";
 const char *const creditsGruberMusic = "Gruber Music";
@@ -49,6 +53,8 @@ const MetaSpec songInfo[NUM_SONGS] = {
   MetaSpec { .title = "The Lair 3", .credits = creditsGruberMusic },
   MetaSpec { .title = "Wintergolf", .credits = creditsGruberMusic },
   MetaSpec { .title = "Porklike", .credits = "Krystian Majewski" },
+  MetaSpec { .title = "Bubble Bobble #1", .credits = creditsPahammond },
+  MetaSpec { .title = "Bubble Bobble #2", .credits = creditsPahammond },
 };
 
 constexpr int HISTORY_LEN = 25;
