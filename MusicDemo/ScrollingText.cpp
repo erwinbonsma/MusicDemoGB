@@ -11,8 +11,8 @@ void ScrollingText::setText(const char* text) {
   _delta = 0;
   _waitCount = 0;
 
-  int textLen = strlen(text);
-  _maxDelta = (_width - textLen) * 4;
+  int textLen = strlen(text) * 4 - 1;
+  _maxDelta = _width - textLen;
   _movingRight = (_maxDelta < 0);
 }
 

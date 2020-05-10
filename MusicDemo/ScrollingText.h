@@ -4,7 +4,7 @@ class ScrollingText {
   const char* _text;
   int16_t _delta, _maxDelta;
   uint8_t _x0, _y0;
-  uint8_t _width; // in characters
+  uint8_t _width; // in pixels
   bool _movingRight;
   uint8_t _waitCount;
 

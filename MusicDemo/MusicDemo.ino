@@ -78,8 +78,8 @@ Buttons buttons;
 int songIndex;
 bool playing;
 
-ScrollingText titleText = ScrollingText(18, 4, 4);
-ScrollingText creditsText = ScrollingText(18, 4, 10);
+ScrollingText titleText = ScrollingText(72, 4, 4);
+ScrollingText creditsText = ScrollingText(72, 4, 10);
 
 void updateSongInfo() {
   titleText.setText(songInfo[songIndex].title);
