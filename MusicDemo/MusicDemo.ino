@@ -68,10 +68,11 @@ const MetaSpec songInfo[NUM_SONGS] = {
   MetaSpec { .title = "Sweet Buns #2", .credits = creditsKrystian },
 };
 
-constexpr int HISTORY_LEN = 25;
-int8_t cpuLoadHistory[HISTORY_LEN];
+constexpr int CPU_HISTORY_LEN = 10;
+constexpr int LEVEL_HISTORY_LEN = 25;
+int8_t cpuLoadHistory[CPU_HISTORY_LEN];
 int cpuLoadHistoryIndex;
-int8_t levelHistory[HISTORY_LEN];
+int8_t levelHistory[LEVEL_HISTORY_LEN];
 int levelHistoryIndex;
 
 Buttons buttons;
@@ -80,6 +81,8 @@ bool playing;
 
 ScrollingText titleText = ScrollingText(72, 4, 4);
 ScrollingText creditsText = ScrollingText(72, 4, 10);
+
+bool showCPU;
 
 void updateSongInfo() {
   titleText.setText(songInfo[songIndex].title);
@@ -111,17 +114,7 @@ void stopSong() {
   gb.sound.stopSong();
 }
 
-void update() {
-  titleText.update();
-  creditsText.update();
-  buttons.update();
-
-  if (playing && !gb.sound.isSongPlaying()) {
-    // Song just finished. Go to next
-    nextSong();
-    playSong();
-  }
-
+void handleInput() {
   if (gb.buttons.held(BUTTON_A, 0)) {
     buttons.playButton().click();
     playing = !playing;
@@ -159,19 +152,37 @@ void update() {
       stopSong();
     }
   }
+
   if (gb.buttons.held(BUTTON_UP, 0)) {
     buttons.repeatButton().click();
     gb.sound.loopSong(buttons.repeatButton().isEnabled());
   }
+  if (gb.buttons.held(BUTTON_DOWN, 0)) {
+    showCPU = !showCPU;
+  }
+}
+
+void update() {
+  titleText.update();
+  creditsText.update();
+  buttons.update();
+
+  if (playing && !gb.sound.isSongPlaying()) {
+    // Song just finished. Go to next
+    nextSong();
+    playSong();
+  }
 
   cpuLoadHistory[cpuLoadHistoryIndex++] = gb.getCpuLoad();
-  if (cpuLoadHistoryIndex == HISTORY_LEN) {
+  if (cpuLoadHistoryIndex == CPU_HISTORY_LEN) {
     cpuLoadHistoryIndex = 0;
   }
   levelHistory[levelHistoryIndex++] = gb.sound.getLevel();
-  if (levelHistoryIndex == HISTORY_LEN) {
+  if (levelHistoryIndex == LEVEL_HISTORY_LEN) {
     levelHistoryIndex = 0;
   }
+
+  handleInput();
 }
 
 void drawDisplay(int x, int y, int w, int h, bool onlyEdges = false) {
@@ -212,13 +223,28 @@ void drawSongTime() {
   gb.display.printf("%02d:%02d", len / 60, len % 60);
 }
 
+int getMaxCpuLoad() {
+  int maxLevel = 0;
+
+  for (int i = CPU_HISTORY_LEN; --i >= 0;  ) {
+    int level = cpuLoadHistory[i];
+    maxLevel = max(maxLevel, level);
+  }
+
+  return maxLevel;
+}
+
 void drawTrackNumber() {
   drawDisplay(6, 23, 23, 9);
 
   gb.display.setColor(INDEX_BROWN);
   gb.display.setCursor(8, 25);
 
-  gb.display.printf("%02d/%02d", (songIndex + 1), NUM_SONGS);
+  if (showCPU) {
+    gb.display.printf("%3d%%", getMaxCpuLoad());
+  } else {
+    gb.display.printf("%02d/%02d", (songIndex + 1), NUM_SONGS);
+  }
 }
 
 void drawSongInfo() {
@@ -237,14 +263,15 @@ void drawOutputLevel() {
 
   int minLevel = 64;
   int maxLevel = 0;
-  for (int i = HISTORY_LEN; --i >= 0;  ) {
+  for (int i = LEVEL_HISTORY_LEN; --i >= 0;  ) {
     int level = levelHistory[i];
     minLevel = min(minLevel, level);
     maxLevel = max(maxLevel, level);
   }
 
+  int curLevel = levelHistory[(levelHistoryIndex + LEVEL_HISTORY_LEN - 1) % LEVEL_HISTORY_LEN];
   gb.display.setColor(INDEX_BROWN);
-  gb.display.fillRect(8, 39, levelHistory[(levelHistoryIndex + HISTORY_LEN - 1) % HISTORY_LEN], 5);
+  gb.display.fillRect(8, 39, curLevel, 5);
 
   gb.display.setColor(INDEX_ORANGE);
   gb.display.drawFastVLine(8 + minLevel, 39, 5);
