@@ -46,7 +46,7 @@ void ScrollingText::update() {
 void ScrollingText::draw() {
   int dx = (_delta >= 0) ? _delta : _delta % 4;
   int firstChar = (_delta >= 0) ? 0 : (-_delta / 4);
-  int maxWidth = _width + (dx < 0);
+  int maxWidth = (_width / 4) + (dx < 0);
 
   if (dx == -3) {
     // First character is entirely outside of target area. Only space would be drawn. Therefore skip it.
