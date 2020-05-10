@@ -1410,5 +1410,5 @@ const SongSpec song43BumbleBots = SongSpec {
 
 } // Namespace
 
-const Gamebuino_Meta::SongSpec* bumbleBotsSong1 = &Gamebuino_Meta::song0bumbleBots;
-const Gamebuino_Meta::SongSpec* bumbleBotsSong2 = &Gamebuino_Meta::song43bumbleBots;
+const Gamebuino_Meta::SongSpec* bumbleBotsSong1 = &Gamebuino_Meta::song0BumbleBots;
+const Gamebuino_Meta::SongSpec* bumbleBotsSong2 = &Gamebuino_Meta::song43BumbleBots;
