@@ -9,10 +9,12 @@
 #include "Song_Neon.h"
 #include "Song_Porklike.h"
 #include "Song_RockForMetal.h"
+#include "Song_SweetBuns.h"
 #include "Song_TheLair.h"
+#include "Song_TuEdict.h"
 #include "Song_Wintergolf.h"
 
-constexpr int NUM_SONGS = 14;
+constexpr int NUM_SONGS = 17;
 const Gamebuino_Meta::SongSpec* songs[NUM_SONGS] = {
   bumbleBotsSong1,
   bumbleBotsSong2,
@@ -27,13 +29,18 @@ const Gamebuino_Meta::SongSpec* songs[NUM_SONGS] = {
   wintergolfSong,
   porklikeSong,
   bubbleBobbleSong1,
-  bubbleBobbleSong2
+  bubbleBobbleSong2,
+  technoUtopianEdictSong,
+  sweetBunsSong1,
+  sweetBunsSong2,
 };
 
 const char *const creditsPahammond = "pahammond";
 const char *const creditsPaul = "Paul Bonsma";
 const char *const creditsDomarius = "Domarius";
 const char *const creditsGruberMusic = "Gruber Music";
+const char *const creditsJumalauta = "Jumalauta";
+const char *const creditsKrystian = "Krystian Majewski";
 
 struct MetaSpec {
   const char *const title;
@@ -43,7 +50,7 @@ struct MetaSpec {
 const MetaSpec songInfo[NUM_SONGS] = {
   MetaSpec { .title = "Bumble Bots #1", .credits = creditsPaul },
   MetaSpec { .title = "Bumble Bots #2", .credits = creditsPaul },
-  MetaSpec { .title = "Rock for Metal", .credits = "Jumalauta" },
+  MetaSpec { .title = "Rock for Metal", .credits = creditsJumalauta },
   MetaSpec { .title = "Alex Kidd #1", .credits = creditsDomarius },
   MetaSpec { .title = "Alex Kidd #2", .credits = creditsDomarius },
   MetaSpec { .title = "Alex Kidd #3", .credits = creditsDomarius },
@@ -52,9 +59,12 @@ const MetaSpec songInfo[NUM_SONGS] = {
   MetaSpec { .title = "The Lair #2", .credits = creditsGruberMusic },
   MetaSpec { .title = "The Lair 3", .credits = creditsGruberMusic },
   MetaSpec { .title = "Wintergolf", .credits = creditsGruberMusic },
-  MetaSpec { .title = "Porklike", .credits = "Krystian Majewski" },
+  MetaSpec { .title = "Porklike", .credits = creditsKrystian },
   MetaSpec { .title = "Bubble Bobble #1", .credits = creditsPahammond },
   MetaSpec { .title = "Bubble Bobble #2", .credits = creditsPahammond },
+  MetaSpec { .title = "Techno Utopian Edict", .credits = creditsJumalauta },
+  MetaSpec { .title = "Sweet Buns #1", .credits = creditsKrystian },
+  MetaSpec { .title = "Sweet Buns #2", .credits = creditsKrystian },
 };
 
 constexpr int HISTORY_LEN = 25;
