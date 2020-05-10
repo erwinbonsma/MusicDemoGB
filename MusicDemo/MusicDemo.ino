@@ -2,6 +2,7 @@
 
 #include "Buttons.h"
 #include "Images.h"
+#include "ScrollingText.h"
 
 #include "Song_AlexKidd.h"
 #include "Song_BubbleBobble.h"
@@ -57,7 +58,7 @@ const MetaSpec songInfo[NUM_SONGS] = {
   MetaSpec { .title = "Neon", .credits = "Luca Harris" },
   MetaSpec { .title = "The Lair #1", .credits = creditsGruberMusic },
   MetaSpec { .title = "The Lair #2", .credits = creditsGruberMusic },
-  MetaSpec { .title = "The Lair 3", .credits = creditsGruberMusic },
+  MetaSpec { .title = "The Lair #3", .credits = creditsGruberMusic },
   MetaSpec { .title = "Wintergolf", .credits = creditsGruberMusic },
   MetaSpec { .title = "Porklike", .credits = creditsKrystian },
   MetaSpec { .title = "Bubble Bobble #1", .credits = creditsPahammond },
@@ -77,12 +78,21 @@ Buttons buttons;
 int songIndex;
 bool playing;
 
+ScrollingText titleText = ScrollingText(18, 4, 4);
+ScrollingText creditsText = ScrollingText(18, 4, 10);
+
+void updateSongInfo() {
+  titleText.setText(songInfo[songIndex].title);
+  creditsText.setText(songInfo[songIndex].credits);
+}
+
 void prevSong() {
   if (songIndex == 0) {
     songIndex = NUM_SONGS - 1;
   } else {
     --songIndex;
   }
+  updateSongInfo();
 }
 
 void nextSong() {
@@ -90,6 +100,7 @@ void nextSong() {
   if (songIndex == NUM_SONGS) {
     songIndex = 0;
   }
+  updateSongInfo();
 }
 
 void playSong() {
@@ -101,6 +112,8 @@ void stopSong() {
 }
 
 void update() {
+  titleText.update();
+  creditsText.update();
   buttons.update();
 
   if (playing && !gb.sound.isSongPlaying()) {
@@ -202,10 +215,8 @@ void drawTrackNumber() {
 void drawSongInfo() {
   drawDisplay(2, 2, 76, 16);
   gb.display.setColor(INDEX_BROWN);
-  gb.display.setCursor(4, 4);
-  gb.display.print(songInfo[songIndex].title);
-  gb.display.setCursor(4, 10);
-  gb.display.printf("by %s\n", songInfo[songIndex].credits);
+  titleText.draw();
+  creditsText.draw();
 }
 
 void drawOutputLevel() {
@@ -247,6 +258,8 @@ void draw() {
 
 void setup() {
   gb.begin();
+
+  updateSongInfo();
 }
 
 void loop() {
