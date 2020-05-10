@@ -28,7 +28,7 @@ void ScrollingText::update() {
     _movingRight = !_movingRight;
     // Wait longer for text that does not fully fit, so that there is sufficient time to see
     // the terminal characters.
-    _waitCount = (_maxDelta < 0) ? 20 : 5;
+    _waitCount = (_maxDelta < 0) ? 40 : 20;
   }
 
   if (_waitCount > 0) {
@@ -36,6 +36,11 @@ void ScrollingText::update() {
   }
 
   _delta += _movingRight ? 1 : -1;
+
+  if (_delta != 0 && _delta != _maxDelta) {
+    // Do not scroll a full pixel every frame
+    _waitCount = 5;
+  }
 }
 
 void ScrollingText::draw() {
