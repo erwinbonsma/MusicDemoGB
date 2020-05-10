@@ -6,6 +6,7 @@ class ScrollingText {
   uint8_t _x0, _y0;
   uint8_t _width; // in characters
   bool _movingRight;
+  uint8_t _waitCount;
 
 public:
   ScrollingText(int width, int x0, int y0);

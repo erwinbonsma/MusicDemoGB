@@ -9,6 +9,7 @@ ScrollingText::ScrollingText(int width, int x0, int y0)
 void ScrollingText::setText(const char* text) {
   _text = text;
   _delta = 0;
+  _waitCount = 0;
 
   int textLen = strlen(text);
   _maxDelta = (_width - textLen) * 4;
@@ -21,8 +22,17 @@ void ScrollingText::update() {
     return;
   }
 
-  if (_delta == 0 || _delta == _maxDelta) {
+  if (_waitCount > 0) {
+    --_waitCount;
+  } else if (_delta == 0 || _delta == _maxDelta) {
     _movingRight = !_movingRight;
+    // Wait longer for text that does not fully fit, so that there is sufficient time to see
+    // the terminal characters.
+    _waitCount = (_maxDelta < 0) ? 20 : 5;
+  }
+
+  if (_waitCount > 0) {
+    return;
   }
 
   _delta += _movingRight ? 1 : -1;
