@@ -13,11 +13,13 @@ This code includes derivations of the following CC4-BY-NC-SA licensed material:
 *   "Neon" song by Luca Harris from PICO-8 demo [Neon][]
 *   "Porklike" song by Krystian Majewski from PICO-8 game [Porklike][]
 *   "Rock for Metal" song by Jumalauta from PICO-8 demo [Rock for Metal][]
+*   "Sweet Buns" songs by Krystian Majewski from PICO-8 game [Sweet Buns][]
+*   "Techno Utopian Edict" song by Jumalauta from PICO-8 demo [Techno Utopian Edict][]
 *   "The Lair" songs by Gruber Music from PICO-8 game [The Lair][]
 *   "Wintergolf" songs by Gruber Music from PICO-8 game [Wintergolf][]
 
 Also included:
-*   "Bumble Bots" song by Paul Bonsma (my brother) from PICO-8 game [Bumble Bots][]
+*   "Bumble Bots" songs by Paul Bonsma (my brother) from PICO-8 game [Bumble Bots][]
 
 [Gamebuino]: https://gamebuino.com
 [Alex Kidd]: https://www.lexaloffle.com/bbs/?tid=30218
@@ -26,5 +28,7 @@ Also included:
 [Neon]: https://www.lexaloffle.com/bbs/?pid=74526
 [Porklike]: https://www.lexaloffle.com/bbs/?tid=37045
 [Rock for Metal]: https://www.lexaloffle.com/bbs/?tid=31747
+[Sweet Buns]: https://www.lexaloffle.com/bbs/?tid=31864
+[Techno Utopian Edict]: https://www.lexaloffle.com/bbs/?tid=33486
 [The Lair]: https://www.lexaloffle.com/bbs/?tid=4051
 [Wintergolf]: https://www.lexaloffle.com/bbs/?tid=31956
