@@ -174,16 +174,25 @@ void update() {
   }
 }
 
-void drawDisplay(int x, int y, int w, int h) {
+void drawDisplay(int x, int y, int w, int h, bool onlyEdges = false) {
   gb.display.setColor(INDEX_BLACK);
-  gb.display.fillRect(x + 1, y + 1, w - 2, h - 2);
+  if (onlyEdges) {
+    gb.display.drawFastVLine(x + 1, y + 1, h - 2);
+    gb.display.drawFastVLine(x + w - 2, y + 1, h - 2);
+  } else {
+    gb.display.fillRect(x + 1, y + 1, w - 2, h - 2);
+  }
 
   gb.display.setColor(INDEX_DARKGRAY);
-  gb.display.drawFastHLine(x, y, w - 1);
+  if (!onlyEdges) {
+    gb.display.drawFastHLine(x, y, w - 1);
+  }
   gb.display.drawFastVLine(x, y + 1, h - 2);
 
   gb.display.setColor(INDEX_WHITE);
-  gb.display.drawFastHLine(x + 1, y + h - 1, w - 1);
+  if (!onlyEdges) {
+    gb.display.drawFastHLine(x + 1, y + h - 1, w - 1);
+  }
   gb.display.drawFastVLine(x + w - 1, y + 1, h - 2);
 }
 
@@ -217,6 +226,10 @@ void drawSongInfo() {
   gb.display.setColor(INDEX_BROWN);
   titleText.draw();
   creditsText.draw();
+  // Redraw edges at left and right, as these may have been overwritten when drawing the text.
+  // This can happen when text is too large. The scrolling text can then exceed its drawing area
+  // by two pixels at both the left and right.
+  drawDisplay(2, 2, 76, 16, true);
 }
 
 void drawOutputLevel() {

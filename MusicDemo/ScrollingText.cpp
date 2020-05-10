@@ -33,6 +33,16 @@ void ScrollingText::draw() {
   int firstChar = (_delta >= 0) ? 0 : (-_delta / 4);
   int maxWidth = _width + (dx < 0);
 
+  if (dx == -3) {
+    // First character is entirely outside of target area. Only space would be drawn. Therefore skip it.
+    dx += 4;
+    ++firstChar;
+    --maxWidth;
+  } else if (dx == -1) {
+    // Last character is entirely outside of target area. Only space would be drawn. Therefore skip it.
+    --maxWidth;
+  }
+
   gb.display.setCursor(_x0 + dx, _y0);
   gb.display.printf("%.*s", maxWidth, (_text + firstChar));
 }
