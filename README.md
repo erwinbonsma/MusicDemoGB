@@ -3,6 +3,10 @@
 This is a demo for the Music Generation functionality that I am adding to the library for the [Gamebuino][] console.
 This code is currently available in a [local fork](https://github.com/erwinbonsma/Gamebuino-META.git).
 
+![Animated gif of the music player](MusicDemo.gif)
+
+[Download the demo player][MusicDemoGB].
+You need a Gamebuino device to install it and hear the music.
 
 Credits
 -------
@@ -32,3 +36,5 @@ Also included:
 [Techno Utopian Edict]: https://www.lexaloffle.com/bbs/?tid=33486
 [The Lair]: https://www.lexaloffle.com/bbs/?tid=4051
 [Wintergolf]: https://www.lexaloffle.com/bbs/?tid=31956
+
+[MusicDemoGB]: https://gamebuino.com/creations/music-demo
