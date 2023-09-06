@@ -24,12 +24,14 @@ This code includes derivations of the following CC4-BY-NC-SA licensed material:
 
 Also included:
 *   "Bumble Bots" songs by Paul Bonsma (my brother) from PICO-8 game [Bumble Bots][]
+*   "Garden of Life" song by Paul Bonsma from PICO-8 game [Pico Garden][]
 
 [Gamebuino]: https://gamebuino.com
 [Alex Kidd]: https://www.lexaloffle.com/bbs/?tid=30218
 [Bubble Bobble]: https://www.lexaloffle.com/bbs/?tid=37748
 [Bumble Bots]: https://www.lexaloffle.com/bbs/?tid=30250
 [Neon]: https://www.lexaloffle.com/bbs/?pid=74526
+[Pico Garden]: https://www.lexaloffle.com/bbs/?tid=46650
 [Porklike]: https://www.lexaloffle.com/bbs/?tid=37045
 [Rock for Metal]: https://www.lexaloffle.com/bbs/?tid=31747
 [Sweet Buns]: https://www.lexaloffle.com/bbs/?tid=31864
