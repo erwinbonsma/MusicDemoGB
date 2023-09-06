@@ -7,6 +7,7 @@
 #include "Song_AlexKidd.h"
 #include "Song_BubbleBobble.h"
 #include "Song_BumbleBots.h"
+#include "Song_GardenOfLife.h"
 #include "Song_Neon.h"
 #include "Song_Porklike.h"
 #include "Song_RockForMetal.h"
@@ -15,10 +16,11 @@
 #include "Song_TuEdict.h"
 #include "Song_Wintergolf.h"
 
-constexpr int NUM_SONGS = 17;
+constexpr int NUM_SONGS = 18;
 const Gamebuino_Meta::SongSpec* songs[NUM_SONGS] = {
   bumbleBotsSong1,
   bumbleBotsSong2,
+  gardenOfLifeSong,
   rockForMetalSong,
   alexKiddSong1,
   alexKiddSong2,
@@ -51,6 +53,7 @@ struct MetaSpec {
 const MetaSpec songInfo[NUM_SONGS] = {
   MetaSpec { .title = "Bumble Bots #1", .credits = creditsPaul },
   MetaSpec { .title = "Bumble Bots #2", .credits = creditsPaul },
+  MetaSpec { .title = "Garden of Life", .credits = creditsPaul },
   MetaSpec { .title = "Rock for Metal", .credits = creditsJumalauta },
   MetaSpec { .title = "Alex Kidd #1", .credits = creditsDomarius },
   MetaSpec { .title = "Alex Kidd #2", .credits = creditsDomarius },
