@@ -5,8 +5,8 @@ This code is currently available in a [local fork](https://github.com/erwinbonsm
 
 ![Animated gif of the music player](MusicDemo.gif)
 
-[Download the demo player][MusicDemoGB].
-You need a Gamebuino device to install it and hear the music.
+You can [hear the result online][MusicDemoOnline] in the Gamebuino emulator.
+[Download the demo player][MusicDemoGB] if you want to run it on your Gamebuino.
 
 Credits
 -------
@@ -40,3 +40,4 @@ Also included:
 [Wintergolf]: https://www.lexaloffle.com/bbs/?tid=31956
 
 [MusicDemoGB]: https://gamebuino.com/creations/music-demo
+[MusicDemoOnline]: https://erwinbonsma.nl/Games/MusicDemoGB/index.html
